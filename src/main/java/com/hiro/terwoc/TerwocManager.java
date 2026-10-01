@@ -31,11 +31,11 @@ public class TerwocManager {
             System.out.println("Gagal! Kapasitas gudang sudah penuh.");
         }
     }
-
+// | %-8s | %-15s | Rp%-10.0f | Stok: %-4d | Size: %-2s, %-4s |%n
     // Method Tracking
     public void tampilkanSemuaTracking() {
         System.out.println("\n===============================================================================");
-        System.out.printf("| %-10s | %-18s | %-12s | %-4s | %-17s |%n", "ID BARANG", "NAMA BARANG", "HARGA", "STOK", "INFO KHUSUS");
+        System.out.printf("| %-8s | %-15s | %-12s | %-7s | %-17s |%n", "ID BARANG", "NAMA BARANG", "HARGA", "STOK", "INFO KHUSUS");
         System.out.println("===============================================================================");
 
         if (totalBarang == 0) {
@@ -92,6 +92,15 @@ public class TerwocManager {
             }
         }
         return null; // Mengembalikan null jika tidak ada
+    }
+
+    public void simulasiPengecekanKualitas(Barang b) {
+        System.out.println("\n--- MEMULAI SIMULASI PENGECEKAN KUALITAS ---");
+        System.out.println("Menganalisis barang dengan ID: " + b.getIdBarang());
+        b.tampilkanInfo();
+
+        System.out.println("Status: Pengecekan Selesai. Barang memenuhi standar gudang TERWOC.");
+        System.out.println("--------------------------------------------");
     }
 
     public int getKapasitasMaksimal() {

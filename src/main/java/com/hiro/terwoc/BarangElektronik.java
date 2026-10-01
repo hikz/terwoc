@@ -18,7 +18,7 @@ public class BarangElektronik extends Barang {
 
     @Override
     public void tampilkanInfo() {
-        System.out.printf("| %-8s | %-15s | Rp%-10.0f | Stok: %-4d | Garansi: %d Bulan |\n",
+        System.out.printf("| %-9s | %-15s | Rp%-10.0f | %-7d | Garansi: %d Bulan |\n",
                 super.getIdBarang(), super.getNamaBarang(), super.getHarga(), super.getStok(), this.lamaGaransiBulan);
     }
 }
