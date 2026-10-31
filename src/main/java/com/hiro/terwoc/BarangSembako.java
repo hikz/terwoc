@@ -38,6 +38,11 @@ public class BarangSembako extends Barang {
     }
 
     @Override
+    public String getKategori() {
+        return "Sembako";
+    }
+
+    @Override
     public void tampilkanInfo() {
         String stokSatuan = super.getStok() + " " + this.satuan;
         System.out.printf("| %-9s | %-15s | Rp%-10.0f | %-7s | Expired: %-8s |\n",

@@ -1,6 +1,6 @@
 package com.hiro.terwoc;
 
-public class BarangElektronik extends Barang {
+public class BarangElektronik extends Barang implements Diskonable {
     private int lamaGaransiBulan;
 
     public BarangElektronik(String id, String nama, double harga, int stok, int garansi) {
@@ -14,6 +14,17 @@ public class BarangElektronik extends Barang {
         if(garansi >= 0) {
             this.lamaGaransiBulan = garansi;
         }
+    }
+
+    @Override
+    public String getKategori() {
+        return "Elektronik";
+    }
+
+    @Override
+    public double hitungHargaDiskon(double persentase) {
+        double potongan = super.getHarga() * (persentase / 100.0);
+        return super.getHarga() - potongan;
     }
 
     @Override

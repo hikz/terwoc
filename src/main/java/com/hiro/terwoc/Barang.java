@@ -64,6 +64,7 @@ public abstract class Barang {
 
     // Method abstract untuk dioverride oleh subclass
     public abstract void tampilkanInfo();
+    public abstract String getKategori();
 }
 
 

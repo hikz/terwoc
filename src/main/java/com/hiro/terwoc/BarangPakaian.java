@@ -1,6 +1,6 @@
 package com.hiro.terwoc;
 
-public class BarangPakaian extends Barang {
+public class BarangPakaian extends Barang implements Diskonable {
     private String ukuran;
     private String bahan;
 
@@ -8,6 +8,17 @@ public class BarangPakaian extends Barang {
         super(idBarang, namaBarang, harga, stok); // Memanggil constructor Superclass
         this.ukuran = ukuran;
         this.bahan = bahan;
+    }
+
+    @Override
+    public String getKategori() {
+        return "Pakaian";
+    }
+
+    @Override
+    public double hitungHargaDiskon(double persentase) {
+        double potongan = super.getHarga() * (persentase / 100.0);
+        return super.getHarga() - potongan;
     }
 
     // Method Overriding untuk Runtime Polymorphism

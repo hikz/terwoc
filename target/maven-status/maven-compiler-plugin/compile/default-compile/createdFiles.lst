@@ -1,0 +1,8 @@
+com\hiro\terwoc\MainApp.class
+com\hiro\terwoc\Diskonable.class
+com\hiro\terwoc\StokTidakCukupException.class
+com\hiro\terwoc\Barang.class
+com\hiro\terwoc\BarangElektronik.class
+com\hiro\terwoc\TerwocManager.class
+com\hiro\terwoc\BarangSembako.class
+com\hiro\terwoc\BarangPakaian.class
