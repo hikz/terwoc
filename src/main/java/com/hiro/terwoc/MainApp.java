@@ -12,6 +12,8 @@ public class MainApp {
         sistemTerwoc.tambahEntryBarang(new BarangElektronik("E01", "Laptop ASUS", 12000000, 5, 24));
         sistemTerwoc.tambahEntryBarang(new BarangSembako("S01", "Beras Mentik", 65000, 50, "Kg", "12-2025"));
         sistemTerwoc.tambahEntryBarang(new BarangPakaian("P01", "Kemeja Flanel", 150000, 20, "XL", "Katun"));
+        // Objek pemasok dibuat di luar manager, lalu diagregasikan melalui method tambah.
+        sistemTerwoc.tambahPemasok(new Pemasok("SUP01", "CV Sumber Niaga", "0812-0000-0000"));
 
         System.out.println("========================================");
         System.out.println("   SELAMAT DATANG DI SISTEM TERWOC");
@@ -26,6 +28,9 @@ public class MainApp {
             System.out.println("5. Pengaturan Sistem (Ubah Kuota Kapasitas)");
             System.out.println("6. Simulasi Pengecekan Kualitas (Dynamic Binding via Parameter)");
             System.out.println("7. Simulasi Diskon (Interface & Implements)");
+            System.out.println("8. Daftarkan Pemasok");
+            System.out.println("9. Tampilkan Semua Pemasok");
+            System.out.println("10. Terima Stok dari Pemasok (Association)");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
 
@@ -199,6 +204,44 @@ public class MainApp {
                     } catch (InputMismatchException e) {
                         System.out.println("Error: Persentase diskon harus berupa angka!");
                         input.nextLine();
+                    }
+                    break;
+
+                case 8:
+                    System.out.println("\n[ PENDAFTARAN PEMASOK ]");
+                    System.out.print("Masukkan ID Pemasok : ");
+                    String idPemasok = input.nextLine();
+                    System.out.print("Masukkan Nama       : ");
+                    String namaPemasok = input.nextLine();
+                    System.out.print("Masukkan Kontak     : ");
+                    String kontakPemasok = input.nextLine();
+                    try {
+                        sistemTerwoc.tambahPemasok(new Pemasok(idPemasok, namaPemasok, kontakPemasok));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                    break;
+
+                case 9:
+                    sistemTerwoc.lihatSemuaPemasok();
+                    break;
+
+                case 10:
+                    System.out.println("\n[ PENERIMAAN STOK DARI PEMASOK ]");
+                    System.out.print("Masukkan ID Pemasok : ");
+                    String idPemasokTerima = input.nextLine();
+                    System.out.print("Masukkan ID Barang  : ");
+                    String idBarangTerima = input.nextLine();
+                    try {
+                        System.out.print("Jumlah diterima     : ");
+                        int jumlahTerima = input.nextInt();
+                        input.nextLine();
+                        sistemTerwoc.prosesPenerimaanBarang(idPemasokTerima, idBarangTerima, jumlahTerima);
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: Jumlah penerimaan harus berupa angka bulat!");
+                        input.nextLine();
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error: " + e.getMessage());
                     }
                     break;
 

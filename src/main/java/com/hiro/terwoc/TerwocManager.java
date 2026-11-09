@@ -8,12 +8,16 @@ public class TerwocManager {
     // Menggunakan Collection Framework: ArrayList dan HashMap
     private ArrayList<Barang> daftarBarang;
     private HashMap<String, Barang> mapBarang;
-    private int kapasitasMaksimal;
+    private final RuangPenyimpanan ruangPenyimpanan;
+    private final TransaksiPenerimaanBarang transaksiPenerimaanBarang;
+    private final HashMap<String, Pemasok> mapPemasok;
 
     public TerwocManager(int kapasitas) {
-        this.kapasitasMaksimal = kapasitas;
+        this.ruangPenyimpanan = new RuangPenyimpanan(kapasitas);
+        this.transaksiPenerimaanBarang = new TransaksiPenerimaanBarang();
         this.daftarBarang = new ArrayList<>();
         this.mapBarang = new HashMap<>();
+        this.mapPemasok = new HashMap<>();
     }
 
     // Method Entry Record
@@ -24,13 +28,58 @@ public class TerwocManager {
             return;
         }
 
-        if (daftarBarang.size() < kapasitasMaksimal) {
+        if (ruangPenyimpanan.masihTersedia(daftarBarang.size())) {
             daftarBarang.add(barangBaru);
             mapBarang.put(barangBaru.getIdBarang(), barangBaru);
             System.out.println(barangBaru.getNamaBarang() + " berhasil masuk ke gudang.");
         } else {
             System.out.println("Gagal! Kapasitas gudang sudah penuh.");
         }
+    }
+
+    // Aggregation: Pemasok dibuat di luar manager, lalu didaftarkan di sini.
+    public boolean tambahPemasok(Pemasok pemasok) {
+        if (pemasok == null) {
+            System.out.println("Gagal! Data pemasok tidak boleh kosong.");
+            return false;
+        }
+        if (mapPemasok.containsKey(pemasok.getIdPemasok())) {
+            System.out.println("Gagal! ID pemasok '" + pemasok.getIdPemasok() + "' sudah terdaftar.");
+            return false;
+        }
+        mapPemasok.put(pemasok.getIdPemasok(), pemasok);
+        System.out.println("Pemasok " + pemasok.getNamaPemasok() + " berhasil didaftarkan.");
+        return true;
+    }
+
+    public Pemasok cariPemasok(String id) {
+        return mapPemasok.get(id);
+    }
+
+    public void lihatSemuaPemasok() {
+        System.out.println("\n===============================================");
+        System.out.printf("| %-10s | %-24s | %-24s |%n", "ID", "NAMA PEMASOK", "KONTAK");
+        System.out.println("===============================================");
+        if (mapPemasok.isEmpty()) {
+            System.out.println("Belum ada pemasok terdaftar.");
+        } else {
+            for (Pemasok pemasok : mapPemasok.values()) pemasok.tampilkanInfo();
+        }
+        System.out.println("===============================================");
+    }
+
+    public boolean prosesPenerimaanBarang(String idPemasok, String idBarang, int jumlah) {
+        Pemasok pemasok = cariPemasok(idPemasok);
+        Barang barang = cariBarang(idBarang);
+        if (pemasok == null) {
+            System.out.println("Pemasok dengan ID '" + idPemasok + "' tidak ditemukan.");
+            return false;
+        }
+        if (barang == null) {
+            System.out.println("Barang dengan ID '" + idBarang + "' tidak ditemukan.");
+            return false;
+        }
+        return transaksiPenerimaanBarang.prosesPenerimaan(pemasok, barang, jumlah);
     }
 
     // Method Tracking
@@ -75,13 +124,12 @@ public class TerwocManager {
 
     // Method Pengaturan Kapasitas
     public boolean ubahKapasitas(int kapasitasBaru) {
-        if (kapasitasBaru < daftarBarang.size()) {
+        if (!ruangPenyimpanan.ubahKapasitas(kapasitasBaru, daftarBarang.size())) {
             System.out.println("Gagal! Kapasitas baru (" + kapasitasBaru + ") lebih kecil dari jumlah barang saat ini (" + daftarBarang.size() + ").");
             return false;
         }
 
-        this.kapasitasMaksimal = kapasitasBaru;
-        System.out.println("Sukses! Kapasitas gudang diperbarui menjadi " + kapasitasMaksimal + " slot.");
+        System.out.println("Sukses! Kapasitas gudang diperbarui menjadi " + ruangPenyimpanan.getKapasitasMaksimal() + " slot.");
         return true;
     }
 
@@ -125,7 +173,7 @@ public class TerwocManager {
     }
 
     public int getKapasitasMaksimal() {
-        return kapasitasMaksimal;
+        return ruangPenyimpanan.getKapasitasMaksimal();
     }
 
     public int getTotalBarang() {
