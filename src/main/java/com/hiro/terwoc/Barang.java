@@ -1,6 +1,10 @@
 package com.hiro.terwoc;
 
-public abstract class Barang {
+import java.io.Serializable;
+
+public abstract class Barang implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String idBarang;
     private String namaBarang;
     private double harga;
@@ -42,6 +46,10 @@ public abstract class Barang {
         return totalBarangDibuat;
     }
 
+    public static void setTotalBarangDibuat(int total) {
+        totalBarangDibuat = total;
+    }
+
     public void tambahStok(int jumlah) {
         if (jumlah > 0) this.stok += jumlah;
     }
@@ -66,8 +74,3 @@ public abstract class Barang {
     public abstract void tampilkanInfo();
     public abstract String getKategori();
 }
-
-
-
-
-

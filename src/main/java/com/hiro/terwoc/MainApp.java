@@ -6,18 +6,31 @@ import java.util.Scanner;
 public class MainApp {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        TerwocManager sistemTerwoc = new TerwocManager(10); // Kapasitas awal 10
+        TerwocManager sistemTerwoc = new TerwocManager(15); // Kapasitas awal 15
         boolean aplikasiJalan = true;
-
-        sistemTerwoc.tambahEntryBarang(new BarangElektronik("E01", "Laptop ASUS", 12000000, 5, 24));
-        sistemTerwoc.tambahEntryBarang(new BarangSembako("S01", "Beras Mentik", 65000, 50, "Kg", "12-2025"));
-        sistemTerwoc.tambahEntryBarang(new BarangPakaian("P01", "Kemeja Flanel", 150000, 20, "XL", "Katun"));
-        // Objek pemasok dibuat di luar manager, lalu diagregasikan melalui method tambah.
-        sistemTerwoc.tambahPemasok(new Pemasok("SUP01", "CV Sumber Niaga", "0812-0000-0000"));
 
         System.out.println("========================================");
         System.out.println("   SELAMAT DATANG DI SISTEM TERWOC");
         System.out.println("========================================");
+
+        // DEMO DESERIALIZATION: Memuat data secara otomatis dari file biner .dat di awal program berjalan
+        boolean berhasilMuat = sistemTerwoc.muatDataDariFile();
+
+        // Jika file belum ada atau data masih kosong, inisialisasi minimal 3-5 data objek & 2 pemasok default
+        if (!berhasilMuat || sistemTerwoc.getTotalBarang() == 0) {
+            System.out.println("-> [INISIALISASI DATA AWAL] Menambahkan 5 data objek barang utama & 2 pemasok...");
+            sistemTerwoc.tambahEntryBarang(new BarangElektronik("E01", "Laptop ASUS", 12000000, 5, 24));
+            sistemTerwoc.tambahEntryBarang(new BarangSembako("S01", "Beras Mentik", 65000, 50, "Kg", "12-2025"));
+            sistemTerwoc.tambahEntryBarang(new BarangPakaian("P01", "Kemeja Flanel", 150000, 20, "XL", "Katun"));
+            sistemTerwoc.tambahEntryBarang(new BarangElektronik("E02", "Mouse Wireless", 250000, 15, 12));
+            sistemTerwoc.tambahEntryBarang(new BarangPakaian("P02", "Jaket Parka", 320000, 10, "L", "Parasut"));
+
+            sistemTerwoc.tambahPemasok(new Pemasok("SUP01", "CV Sumber Niaga", "0812-0000-0000"));
+            sistemTerwoc.tambahPemasok(new Pemasok("SUP02", "PT Pangan Nusantara", "0856-1111-2222"));
+
+            // Otomatis simpan data awal ke file biner
+            sistemTerwoc.simpanDataKeFile();
+        }
 
         while (aplikasiJalan) {
             System.out.println("\n--- MAIN MENU TERWOC ---");
@@ -28,10 +41,13 @@ public class MainApp {
             System.out.println("5. Pengaturan Sistem (Ubah Kuota Kapasitas)");
             System.out.println("6. Simulasi Pengecekan Kualitas (Dynamic Binding via Parameter)");
             System.out.println("7. Simulasi Diskon (Interface & Implements)");
-            System.out.println("8. Daftarkan Pemasok");
+            System.out.println("8. Daftarkan Pemasok (Aggregation)");
             System.out.println("9. Tampilkan Semua Pemasok");
             System.out.println("10. Terima Stok dari Pemasok (Association)");
-            System.out.println("0. Keluar");
+            System.out.println("11. Baca File Log Riwayat/Transaksi (File I/O Teks)");
+            System.out.println("12. Simpan Data Objek ke File (Object Serialization)");
+            System.out.println("13. Muat Data Objek dari File (Object Deserialization)");
+            System.out.println("0. Simpan & Keluar");
             System.out.print("Pilih menu: ");
 
             int pilihan = -1;
@@ -123,9 +139,13 @@ public class MainApp {
                                 System.out.print("Masukkan Nama Supplier: ");
                                 String supp = input.nextLine();
                                 barangDitemukan.tambahStok(jmlStok, supp);
+                                sistemTerwoc.catatLogTransaksi("TAMBAH STOK KHUSUS: " + barangDitemukan.getNamaBarang()
+                                        + " (+" + jmlStok + " dari Supplier " + supp + "). Stok: " + barangDitemukan.getStok());
                             } else {
                                 barangDitemukan.tambahStok(jmlStok);
                                 System.out.println("Stok berhasil ditambah secara reguler.");
+                                sistemTerwoc.catatLogTransaksi("TAMBAH STOK REGULER: " + barangDitemukan.getNamaBarang()
+                                        + " (+" + jmlStok + "). Stok: " + barangDitemukan.getStok());
                             }
                         } catch (InputMismatchException e) {
                             System.out.println("Error: Jumlah stok harus berupa angka bulat!");
@@ -208,7 +228,7 @@ public class MainApp {
                     break;
 
                 case 8:
-                    System.out.println("\n[ PENDAFTARAN PEMASOK ]");
+                    System.out.println("\n[ PENDAFTARAN PEMASOK (AGGREGATION) ]");
                     System.out.print("Masukkan ID Pemasok : ");
                     String idPemasok = input.nextLine();
                     System.out.print("Masukkan Nama       : ");
@@ -227,7 +247,7 @@ public class MainApp {
                     break;
 
                 case 10:
-                    System.out.println("\n[ PENERIMAAN STOK DARI PEMASOK ]");
+                    System.out.println("\n[ PENERIMAAN STOK DARI PEMASOK (ASSOCIATION) ]");
                     System.out.print("Masukkan ID Pemasok : ");
                     String idPemasokTerima = input.nextLine();
                     System.out.print("Masukkan ID Barang  : ");
@@ -245,9 +265,27 @@ public class MainApp {
                     }
                     break;
 
+                case 11:
+                    // DEMO FILE I/O TEKS (Membaca file log dengan File & Scanner)
+                    sistemTerwoc.bacaLogTransaksi();
+                    break;
+
+                case 12:
+                    // DEMO SERIALIZATION: Membekukan seluruh data objek ke file biner
+                    sistemTerwoc.simpanDataKeFile();
+                    break;
+
+                case 13:
+                    // DEMO DESERIALIZATION: Membangkitkan kembali data objek dari file biner
+                    sistemTerwoc.muatDataDariFile();
+                    break;
+
                 case 0:
+                    // DEMO SERIALIZATION SEBELUM KELUAR
+                    System.out.println("\n[ MENYIMPAN SESI KE DATABASE INTERNAL... ]");
+                    sistemTerwoc.simpanDataKeFile();
                     aplikasiJalan = false;
-                    System.out.println("Menutup sistem TERWOC.");
+                    System.out.println("Terima kasih telah menggunakan sistem TERWOC. Program ditutup.");
                     break;
 
                 default:

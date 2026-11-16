@@ -1,6 +1,7 @@
 package com.hiro.terwoc;
 
 public class BarangSembako extends Barang {
+    private static final long serialVersionUID = 1L;
     private String satuan;
     private String tglKedaluwarsa;
 

@@ -1,7 +1,11 @@
 package com.hiro.terwoc;
 
+import java.io.Serializable;
+
 // Komponen internal gudang yg kapasitasnya dimiliki oleh TerwocManager.
-public class RuangPenyimpanan {
+public class RuangPenyimpanan implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int kapasitasMaksimal;
 
     public RuangPenyimpanan(int kapasitasMaksimal) {

@@ -1,7 +1,11 @@
 package com.hiro.terwoc;
 
+import java.io.Serializable;
+
 // Entitas mandiri; dibuat di luar TerwocManager lalu didaftarkan
-public class Pemasok {
+public class Pemasok implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final String idPemasok;
     private final String namaPemasok;
     private final String kontak;

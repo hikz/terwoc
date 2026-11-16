@@ -1,6 +1,7 @@
 package com.hiro.terwoc;
 
 public class BarangPakaian extends Barang implements Diskonable {
+    private static final long serialVersionUID = 1L;
     private String ukuran;
     private String bahan;
 

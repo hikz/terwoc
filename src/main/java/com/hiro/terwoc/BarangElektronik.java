@@ -1,6 +1,7 @@
 package com.hiro.terwoc;
 
 public class BarangElektronik extends Barang implements Diskonable {
+    private static final long serialVersionUID = 1L;
     private int lamaGaransiBulan;
 
     public BarangElektronik(String id, String nama, double harga, int stok, int garansi) {

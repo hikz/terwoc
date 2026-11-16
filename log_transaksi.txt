@@ -1,0 +1,21 @@
+[2026-11-16 22:13:25] ENTRY BARANG: Laptop ASUS (ID: E01, Kategori: Elektronik, Stok Awal: 5, Harga: Rp12000000)
+[2026-11-16 22:13:25] ENTRY BARANG: Beras Mentik (ID: S01, Kategori: Sembako, Stok Awal: 50, Harga: Rp65000)
+[2026-11-16 22:13:25] ENTRY BARANG: Kemeja Flanel (ID: P01, Kategori: Pakaian, Stok Awal: 20, Harga: Rp150000)
+[2026-11-16 22:13:25] ENTRY BARANG: Mouse Wireless (ID: E02, Kategori: Elektronik, Stok Awal: 15, Harga: Rp250000)
+[2026-11-16 22:13:25] ENTRY BARANG: Jaket Parka (ID: P02, Kategori: Pakaian, Stok Awal: 10, Harga: Rp320000)
+[2026-11-16 22:13:25] DAFTAR PEMASOK: CV Sumber Niaga (ID: SUP01)
+[2026-11-16 22:13:25] DAFTAR PEMASOK: PT Pangan Nusantara (ID: SUP02)
+[2026-11-16 22:13:25] SERIALIZATION: Menyimpan 5 barang dan 2 pemasok ke file 'data_terwoc.dat'.
+[2026-11-16 22:13:25] ORDER KELUAR: Laptop ASUS (ID: E01) sebanyak 2 pcs. Sisa stok: 3
+[2026-11-16 22:13:25] PENERIMAAN STOK: Mouse Wireless (ID: E02) dari Pemasok 'CV Sumber Niaga' sejumlah 10 pcs. Stok sekarang: 25
+[2026-11-16 22:13:25] SERIALIZATION: Menyimpan 5 barang dan 2 pemasok ke file 'data_terwoc.dat'.
+[2026-11-16 22:13:55] DESERIALIZATION: Berhasil memuat 5 barang dan 2 pemasok dari 'data_terwoc.dat'.
+[2026-11-16 22:13:55] SERIALIZATION: Menyimpan 5 barang dan 2 pemasok ke file 'data_terwoc.dat'.
+[2026-11-16 22:26:53] DESERIALIZATION: Berhasil memuat 5 barang dan 2 pemasok dari 'data_terwoc.dat'.
+[2026-11-16 22:38:15] ORDER KELUAR: Laptop ASUS (ID: E01) sebanyak 2 pcs. Sisa stok: 1
+[2026-11-16 22:38:45] PENERIMAAN STOK: Mouse Wireless (ID: E02) dari Pemasok 'CV Sumber Niaga' sejumlah 10 pcs. Stok sekarang: 35
+[2026-11-16 22:38:56] SERIALIZATION: Menyimpan 5 barang dan 2 pemasok ke file 'data_terwoc.dat'.
+[2026-11-16 22:42:09] DESERIALIZATION: Berhasil memuat 5 barang dan 2 pemasok dari 'data_terwoc.dat'.
+[2026-11-16 22:45:36] DESERIALIZATION: Berhasil memuat 5 barang dan 2 pemasok dari 'data_terwoc.dat'.
+[2026-11-16 22:45:40] SERIALIZATION: Menyimpan 5 barang dan 2 pemasok ke file 'data_terwoc.dat'.
+[2026-11-16 22:46:09] DESERIALIZATION: Berhasil memuat 5 barang dan 2 pemasok dari 'data_terwoc.dat'.
